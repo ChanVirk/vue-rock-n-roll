@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input type="text" placeholder="Add Band..">
-    <button> Add </button>
+    <input type="text" placeholder="Add Band.." @click.stop @keyup.enter="addBand" v-model="newBand">
+    <button @click = "addBand"> Add </button>
 
     <ul>
       <BandItem v-for="band in bands" :key="band.id" :band="band">
@@ -14,7 +14,6 @@
 
 <script>
 import BandItem from '@/components/BandItem.vue'
-
 export default {
   name: 'BandList',
   components: {
@@ -30,7 +29,20 @@ export default {
         id: 2,
         name: 'ColdPlay',
         songs: ['Yellow', 'Fix you', 'Mylo xyloto']
-      }]
+      }],
+      newBand : ''
+    }
+  },
+  methods: {
+    addBand () {
+        var count = this.bands.length +1;
+        var bnd = {
+            id: count,
+            name: this.newBand,
+            songs:[]
+        }
+      this.bands.push(bnd)
+      this.newBand = ''
     }
   }
 }
